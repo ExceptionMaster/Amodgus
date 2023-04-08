@@ -1,5 +1,6 @@
 package es.yoshibv.amodgus.entities;
 
+//import java.util.Random;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -14,6 +15,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+//import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -26,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+//import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -115,6 +118,11 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable {
 		return null;
 	}
 	
+	/*public static boolean canSpawn(EntityType<AmongusEntity> entity, LevelAccessor levelAccess, 
+			MobSpawnType spawnType, BlockPos pos, Random random) {
+		return checkAnimalSpawnRules(entity, levelAccess, spawnType, pos, random)
+				&& levelAccess instanceof final Level level && level.isRainingAt(pos);
+	}*/
 	
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {
         this.playSound(SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, 0.15F, 1.0F);
