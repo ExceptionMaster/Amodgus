@@ -17,16 +17,7 @@ public class AmongusModel extends AnimatedGeoModel<AmongusEntity> {
 	@Override
 	public ResourceLocation getTextureLocation(AmongusEntity object) {
 		// TODO Apéndice de método generado automáticamente
-		int textureNumber = object.getTextureNumber();
-		if(textureNumber == 0){
-			return new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_blue.png");
-		}
-		else if(textureNumber == 1){
-			return new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_yellow.png");
-		}
-		else{
-			return new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_red.png");
-		}
+		return new ResourceLocation(Amodgus.MODID, "textures/entities/amongus.png");
 	}
 	
 	@Override

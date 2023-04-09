@@ -3,8 +3,6 @@ package es.yoshibv.amodgus.entities;
 import java.util.Random;
 import java.util.UUID;
 
-import es.yoshibv.amodgus.init.MobsInit;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -30,6 +28,7 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.player.Player;
@@ -38,6 +37,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.registries.ForgeRegistries;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -50,16 +50,15 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class AmongusEntity extends TamableAnimal implements IAnimatable, NeutralMob {
 	@SuppressWarnings("removal")
 	private AnimationFactory factory = new AnimationFactory(this);
-	private int textureNumber;
 	
 	public AmongusEntity(EntityType<? extends TamableAnimal> p_21803_, Level p_21804_) {
 		super(p_21803_, p_21804_);
 		// TODO Apéndice de constructor generado automáticamente
-		this.textureNumber = random.nextInt();
 	}
 	
 	public static AttributeSupplier setAttributes() {
 		return Mob.createMobAttributes()
+				.add(ForgeMod.ENTITY_GRAVITY.get(),1.0f)
 				.add(Attributes.MAX_HEALTH, 20.00)
 				.add(Attributes.ATTACK_DAMAGE,6.0f)
 				.add(Attributes.ATTACK_SPEED,1.8f)
@@ -67,22 +66,19 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
 				
 	}
 	
-	public int getTextureNumber() {
-		return textureNumber;
-	}
-
 	@Override
 	protected void registerGoals() {
-	      this.goalSelector.addGoal(0, new FloatGoal(this));
+	      this.goalSelector.addGoal(1, new FloatGoal(this));
 	      Ingredient eggHatIngredient = Ingredient.of(ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","egghat")));
-	      this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
-	      this.targetSelector.addGoal(1, new OwnerHurtTargetGoal(this));
-	      this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-	      this.goalSelector.addGoal(4, new TemptGoal(this, 1.1D, eggHatIngredient, false));
-	      this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, true));
-	      this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1.2D, 8.0F, 2.0F, false));
-	      this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0f));
-	      this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+	      this.targetSelector.addGoal(4, new OwnerHurtByTargetGoal(this));
+	      this.targetSelector.addGoal(4, new OwnerHurtTargetGoal(this));
+	      this.goalSelector.addGoal(3, new SitWhenOrderedToGoal(this));
+	      this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, eggHatIngredient, false));
+	      this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
+	      this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.2D, 8.0F, 2.0F, false));
+	      this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0f));
+	      this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+	      this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 	}
 	
 	@Override
@@ -133,7 +129,7 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
 		// TODO Apéndice de método generado automáticamente
-		return MobsInit.AMONGUS.get().create(p_146743_);
+		return null;
 	}
 	
 	public static boolean canSpawn(EntityType<AmongusEntity> entity, LevelAccessor levelAccess, 
