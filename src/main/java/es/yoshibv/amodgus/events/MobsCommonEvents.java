@@ -1,4 +1,4 @@
-/*package es.yoshibv.amodgus.events;
+package es.yoshibv.amodgus.events;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
@@ -17,7 +17,7 @@ public class MobsCommonEvents {
 	public static void biomeLoading(BiomeLoadingEvent event) {
 		if(event.getName().equals(new ResourceLocation("minecraft:plains")))	{
 		event.getSpawns().addSpawn(MobCategory.CREATURE, 
-				new SpawnerData(MobsInit.AMONGUS.get(),5,1,7));
+				new SpawnerData(MobsInit.AMONGUS.get(),30,1,1));
 		}
 	}
-}*/
+}

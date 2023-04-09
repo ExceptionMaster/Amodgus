@@ -1,6 +1,9 @@
 package es.yoshibv.amodgus.entities;
 
-//import java.util.Random;
+import java.util.Random;
+import java.util.UUID;
+
+import es.yoshibv.amodgus.init.MobsInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -15,20 +18,25 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-//import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-//import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -39,32 +47,42 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class AmongusEntity extends TamableAnimal implements IAnimatable {
+public class AmongusEntity extends TamableAnimal implements IAnimatable, NeutralMob {
 	@SuppressWarnings("removal")
 	private AnimationFactory factory = new AnimationFactory(this);
+	private int textureNumber;
 	
 	public AmongusEntity(EntityType<? extends TamableAnimal> p_21803_, Level p_21804_) {
 		super(p_21803_, p_21804_);
 		// TODO Apéndice de constructor generado automáticamente
+		this.textureNumber = random.nextInt();
 	}
 	
 	public static AttributeSupplier setAttributes() {
 		return Mob.createMobAttributes()
-				.add(Attributes.MAX_HEALTH, 20.00)
+				.add(Attributes.MAX_HEALTH, 16.00)
 				.add(Attributes.ATTACK_DAMAGE,3.0f)
 				.add(Attributes.ATTACK_SPEED,1.0f)
-				.add(Attributes.MOVEMENT_SPEED, 0.4f).build();
+				.add(Attributes.MOVEMENT_SPEED, 0.3f).build();
 				
 	}
 	
+	public int getTextureNumber() {
+		return textureNumber;
+	}
+
 	@Override
 	protected void registerGoals() {
 	      this.goalSelector.addGoal(0, new FloatGoal(this));
 	      Ingredient eggHatIngredient = Ingredient.of(ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","egghat")));
-	      this.goalSelector.addGoal(4, new TemptGoal(this, 1.2D, eggHatIngredient, false));
-	      this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-	      this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0f));
-	      this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+	      this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
+	      this.targetSelector.addGoal(1, new OwnerHurtTargetGoal(this));
+	      this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
+	      this.goalSelector.addGoal(4, new TemptGoal(this, 1.1D, eggHatIngredient, false));
+	      this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, true));
+	      this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1.2D, 8.0F, 2.0F, false));
+	      this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0f));
+	      this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 	}
 	
 	@Override
@@ -115,17 +133,16 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable {
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
 		// TODO Apéndice de método generado automáticamente
-		return null;
+		return MobsInit.AMONGUS.get().create(p_146743_);
 	}
 	
-	/*public static boolean canSpawn(EntityType<AmongusEntity> entity, LevelAccessor levelAccess, 
+	public static boolean canSpawn(EntityType<AmongusEntity> entity, LevelAccessor levelAccess, 
 			MobSpawnType spawnType, BlockPos pos, Random random) {
-		return checkAnimalSpawnRules(entity, levelAccess, spawnType, pos, random)
-				&& levelAccess instanceof final Level level && level.isRainingAt(pos);
-	}*/
+		return checkAnimalSpawnRules(entity, levelAccess, spawnType, pos, random);
+	}
 	
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {
-        this.playSound(SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, 0.15F, 1.0F);
+        this.playSound(SoundEvents.NETHERITE_BLOCK_PLACE, 0.15F, 1.0F);
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
@@ -139,6 +156,34 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable {
     protected float getSoundVolume() {
         return 0.2F;
     }
-    	
 
+	@Override
+	public int getRemainingPersistentAngerTime() {
+		// TODO Apéndice de método generado automáticamente
+		return 0;
+	}
+
+	@Override
+	public void setRemainingPersistentAngerTime(int p_21673_) {
+		// TODO Apéndice de método generado automáticamente
+		
+	}
+
+	@Override
+	public UUID getPersistentAngerTarget() {
+		// TODO Apéndice de método generado automáticamente
+		return null;
+	}
+
+	@Override
+	public void setPersistentAngerTarget(UUID p_21672_) {
+		// TODO Apéndice de método generado automáticamente
+		
+	}
+
+	@Override
+	public void startPersistentAngerTimer() {
+		// TODO Apéndice de método generado automáticamente
+		
+	}	
 }
