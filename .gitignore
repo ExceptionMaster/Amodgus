@@ -1,3 +1,7 @@
 /.gradle/
 /build/
 /run/
+/bin/
+/.settings/
+.classpath
+.project
