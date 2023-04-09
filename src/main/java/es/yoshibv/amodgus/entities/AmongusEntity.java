@@ -60,10 +60,10 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
 	
 	public static AttributeSupplier setAttributes() {
 		return Mob.createMobAttributes()
-				.add(Attributes.MAX_HEALTH, 16.00)
-				.add(Attributes.ATTACK_DAMAGE,3.0f)
-				.add(Attributes.ATTACK_SPEED,1.0f)
-				.add(Attributes.MOVEMENT_SPEED, 0.3f).build();
+				.add(Attributes.MAX_HEALTH, 20.00)
+				.add(Attributes.ATTACK_DAMAGE,6.0f)
+				.add(Attributes.ATTACK_SPEED,1.8f)
+				.add(Attributes.MOVEMENT_SPEED, 0.5f).build();
 				
 	}
 	
