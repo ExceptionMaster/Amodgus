@@ -1,22 +1,11 @@
 {
-  "minecraft:adventure/root": {
-    "criteria": {
-      "killed_something": "2023-04-08 05:14:28 +0200"
-    },
-    "done": true
-  },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
-      "minecraft:forest": "2023-04-08 05:12:40 +0200",
-      "minecraft:meadow": "2023-04-08 05:12:51 +0200"
+      "minecraft:frozen_river": "2023-04-09 19:27:43 +0200",
+      "minecraft:snowy_plains": "2023-04-09 19:27:01 +0200",
+      "minecraft:snowy_beach": "2023-04-09 19:26:55 +0200"
     },
     "done": false
-  },
-  "minecraft:husbandry/tame_an_animal": {
-    "criteria": {
-      "tamed_animal": "2023-04-08 05:14:03 +0200"
-    },
-    "done": true
   },
   "DataVersion": 2975
 }
