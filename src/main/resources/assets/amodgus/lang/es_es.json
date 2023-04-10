@@ -3,5 +3,18 @@
     "item.amodgus.knife": "Cuchillo de Impostor",
     "item.amodgus.egghat": "Sombrero de Huevo",
     "item.amodgus.amongus_spawn_egg": "Generar Amongus",
+    "item.amodgus.red_suit": "Traje Rojo",
+   	"item.amodgus.black_suit": "Traje Negro",
+   	"item.amodgus.white_suit": "Traje Blanco",
+   	"item.amodgus.green_suit": "Traje Verde",
+   	"item.amodgus.lime_suit": "Traje Lima",
+   	"item.amodgus.yellow_suit": "Traje Amarillo",
+   	"item.amodgus.orange_suit": "Traje Naranja",
+   	"item.amodgus.pink_suit": "Traje Rosa",
+   	"item.amodgus.magenta_suit": "Traje Magenta",
+   	"item.amodgus.purple_suit": "Traje Morado",
+   	"item.amodgus.blue_suit": "Traje Azul",
+   	"item.amodgus.cyan_suit": "Traje Cyan",
+   	"item.amodgus.brown_suit": "Traje Marrón",
     "entity.amodgus.amongus": "Amongus"   
 }

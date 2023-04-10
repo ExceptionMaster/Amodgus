@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class AmongusRenderer extends GeoEntityRenderer<AmongusEntity> {
-
+		
 	public AmongusRenderer(Context renderManager) {
 		super(renderManager, new AmongusModel());
 		// TODO Apéndice de constructor generado automáticamente
@@ -25,7 +25,7 @@ public class AmongusRenderer extends GeoEntityRenderer<AmongusEntity> {
 	@Override
 	public ResourceLocation getTextureLocation(AmongusEntity object) {
 		// TODO Apéndice de método generado automáticamente
-		return new ResourceLocation(Amodgus.MODID, "textures/entities/amongus.png");
+		return new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_red.png");
 	}
 	
 	@Override
@@ -36,5 +36,5 @@ public class AmongusRenderer extends GeoEntityRenderer<AmongusEntity> {
         stack.scale(1.0f, 1.0f, 1.0f);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
     }
-
+	
 }

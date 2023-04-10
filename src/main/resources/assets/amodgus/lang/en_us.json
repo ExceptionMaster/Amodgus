@@ -3,5 +3,18 @@
     "item.amodgus.knife": "Impostor Knife",
     "item.amodgus.egghat": "Egg Hat",
     "item.amodgus.amongus_spawn_egg": "Amongus Spawn Egg",
+   	"item.amodgus.red_suit": "Red Suit",
+   	"item.amodgus.black_suit": "Black Suit",
+   	"item.amodgus.white_suit": "White Suit",
+   	"item.amodgus.green_suit": "Green Suit",
+   	"item.amodgus.lime_suit": "Lime Suit",
+   	"item.amodgus.yellow_suit": "Yellow Suit",
+   	"item.amodgus.orange_suit": "Orange Suit",
+   	"item.amodgus.pink_suit": "Pink Suit",
+   	"item.amodgus.magenta_suit": "Magenta Suit",
+   	"item.amodgus.purple_suit": "Purple Suit",
+   	"item.amodgus.blue_suit": "Blue Suit",
+   	"item.amodgus.cyan_suit": "Cyan Suit",
+   	"item.amodgus.brown_suit": "Brown Suit",
     "entity.amodgus.amongus": "Amongus"   
 }

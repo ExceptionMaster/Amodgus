@@ -17,7 +17,7 @@ public class AmongusModel extends AnimatedGeoModel<AmongusEntity> {
 	@Override
 	public ResourceLocation getTextureLocation(AmongusEntity object) {
 		// TODO Apéndice de método generado automáticamente
-		return new ResourceLocation(Amodgus.MODID, "textures/entities/amongus.png");
+		return new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_red.png");
 	}
 	
 	@Override
