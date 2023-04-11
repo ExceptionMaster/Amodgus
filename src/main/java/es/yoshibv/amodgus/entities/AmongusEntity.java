@@ -82,10 +82,10 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
 	@Override
 	protected void registerGoals() {
 	      this.goalSelector.addGoal(1, new FloatGoal(this));
-	      this.targetSelector.addGoal(3, new OwnerHurtByTargetGoal(this));
-	      this.targetSelector.addGoal(3, new OwnerHurtTargetGoal(this));
+	      this.targetSelector.addGoal(4, new OwnerHurtByTargetGoal(this));
+	      this.targetSelector.addGoal(4, new OwnerHurtTargetGoal(this));
 	      this.goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
-	      this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
+	      this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
 	      this.goalSelector.addGoal(4, new FollowOwnerGoal(this, 1.2D, 8.0F, 2.0F, false));
 	      this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0f));
 	      this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
