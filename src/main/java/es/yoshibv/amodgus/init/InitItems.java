@@ -31,56 +31,56 @@ public class InitItems {
     		MobsInit.AMONGUS, 0xb4202a, 0xb9bffb, new Item.Properties().tab(AmodgusTab.AMODGUS_TAB).stacksTo(1))
         );
     
-    public static final RegistryObject<Item> RED_SUIT = ITEMS.register(
-            "red_suit", () -> new Item(
+    public static final RegistryObject<Item> RED_TOY = ITEMS.register(
+            "red_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    public static final RegistryObject<Item> BLACK_SUIT = ITEMS.register(
-            "black_suit", () -> new Item(
+    public static final RegistryObject<Item> BLACK_TOY = ITEMS.register(
+            "black_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    public static final RegistryObject<Item> WHITE_SUIT = ITEMS.register(
-            "white_suit", () -> new Item(
+    public static final RegistryObject<Item> WHITE_TOY = ITEMS.register(
+            "white_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    public static final RegistryObject<Item> CYAN_SUIT = ITEMS.register(
-            "cyan_suit", () -> new Item(
+    public static final RegistryObject<Item> CYAN_TOY = ITEMS.register(
+            "cyan_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    public static final RegistryObject<Item> PINK_SUIT = ITEMS.register(
-            "pink_suit", () -> new Item(
+    public static final RegistryObject<Item> PINK_TOY = ITEMS.register(
+            "pink_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    public static final RegistryObject<Item> PURPLE_SUIT = ITEMS.register(
-            "purple_suit", () -> new Item(
+    public static final RegistryObject<Item> PURPLE_TOY = ITEMS.register(
+            "purple_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    public static final RegistryObject<Item> MAGENTA_SUIT = ITEMS.register(
-            "magenta_suit", () -> new Item(
+    public static final RegistryObject<Item> MAGENTA_TOY = ITEMS.register(
+            "magenta_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    public static final RegistryObject<Item> BLUE_SUIT = ITEMS.register(
-            "blue_suit", () -> new Item(
+    public static final RegistryObject<Item> BLUE_TOY = ITEMS.register(
+            "blue_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    public static final RegistryObject<Item> BROWN_SUIT = ITEMS.register(
-            "brown_suit", () -> new Item(
+    public static final RegistryObject<Item> BROWN_TOY = ITEMS.register(
+            "brown_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    public static final RegistryObject<Item> GREEN_SUIT = ITEMS.register(
-            "green_suit", () -> new Item(
+    public static final RegistryObject<Item> GREEN_TOY = ITEMS.register(
+            "green_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    public static final RegistryObject<Item> LIME_SUIT = ITEMS.register(
-            "lime_suit", () -> new Item(
+    public static final RegistryObject<Item> LIME_TOY = ITEMS.register(
+            "lime_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    public static final RegistryObject<Item> YELLOW_SUIT = ITEMS.register(
-            "yellow_suit", () -> new Item(
+    public static final RegistryObject<Item> YELLOW_TOY = ITEMS.register(
+            "yellow_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    public static final RegistryObject<Item> ORANGE_SUIT = ITEMS.register(
-            "orange_suit", () -> new Item(
+    public static final RegistryObject<Item> ORANGE_TOY = ITEMS.register(
+            "orange_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
     
