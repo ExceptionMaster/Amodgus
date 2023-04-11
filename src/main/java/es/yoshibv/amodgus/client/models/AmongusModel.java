@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 import es.yoshibv.amodgus.Amodgus;
+import es.yoshibv.amodgus.client.renderer.AmongusRenderer;
 import es.yoshibv.amodgus.entities.AmongusEntity;
 
 public class AmongusModel extends AnimatedGeoModel<AmongusEntity> {
@@ -17,7 +18,7 @@ public class AmongusModel extends AnimatedGeoModel<AmongusEntity> {
 	@Override
 	public ResourceLocation getTextureLocation(AmongusEntity object) {
 		// TODO Apéndice de método generado automáticamente
-		return new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_red.png");
+		return AmongusRenderer.LOCATION_BY_VARIANT.get(object.getVariant());
 	}
 	
 	@Override
