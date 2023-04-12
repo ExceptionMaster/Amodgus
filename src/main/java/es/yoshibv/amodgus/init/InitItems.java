@@ -1,7 +1,10 @@
 package es.yoshibv.amodgus.init;
 
 import es.yoshibv.amodgus.Amodgus;
+import es.yoshibv.amodgus.sound.ModSounds;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -28,7 +31,7 @@ public class InitItems {
     
     public static final RegistryObject<Item> AMONGUS_SPAWN_EGG = ITEMS.register(
     	"amongus_spawn_egg", () -> new ForgeSpawnEggItem(
-    		MobsInit.AMONGUS, 0xb4202a, 0xb9bffb, new Item.Properties().tab(AmodgusTab.AMODGUS_TAB).stacksTo(1))
+    		MobsInit.AMONGUS, 0xb4202a, 0xb9bffb, new Item.Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1))
         );
     
     public static final RegistryObject<Item> RED_TOY = ITEMS.register(
@@ -83,5 +86,8 @@ public class InitItems {
             "orange_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
-    
+
+    public static final RegistryObject<Item> AMONGUS_DRIP_SONG_MUSIC_DISC = ITEMS.register("music_disc_amongus_drip",
+            () -> new RecordItem(4, ModSounds.AMONGUS_DRIP,
+                    new Item.Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1)));
 }

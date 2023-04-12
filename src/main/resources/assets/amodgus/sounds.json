@@ -1,0 +1,10 @@
+{
+	"amongus_drip_song": { 
+		"sounds": [ 
+			{ 
+				"name": "amodgus:amongus_drip",
+				"stream": true
+			}
+		]
+	}
+}
