@@ -82,14 +82,14 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
 	@Override
 	protected void registerGoals() {
 	      this.goalSelector.addGoal(1, new FloatGoal(this));
-	      this.targetSelector.addGoal(4, new OwnerHurtByTargetGoal(this));
-	      this.targetSelector.addGoal(4, new OwnerHurtTargetGoal(this));
-	      this.goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
+	      this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
+	      this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
+	      this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
 	      this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
-	      this.goalSelector.addGoal(4, new FollowOwnerGoal(this, 1.2D, 8.0F, 2.0F, false));
-	      this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0f));
-	      this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-	      this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+	      this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.2D, 8.0F, 2.0F, false));
+	      this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 6.0f));
+	      this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
+	      this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 	}
 	
 	@Nullable
@@ -113,12 +113,13 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
         event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
         return PlayState.CONTINUE;
     }
-	
+		
 	@Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<AmongusEntity>(this, "controller",
                 0, this::predicate));
     }
+	
 
     @Override
     public AnimationFactory getFactory() {
