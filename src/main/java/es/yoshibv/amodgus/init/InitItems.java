@@ -31,7 +31,7 @@ public class InitItems {
     
     public static final RegistryObject<Item> AMONGUS_SPAWN_EGG = ITEMS.register(
     	"amongus_spawn_egg", () -> new ForgeSpawnEggItem(
-    		MobsInit.AMONGUS, 0xb4202a, 0xb9bffb, new Item.Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1))
+    		MobsInit.AMONGUS, 0xb4202a, 0xb9bffb, new Item.Properties().tab(AmodgusTab.AMODGUS_TAB).stacksTo(1))
         );
     
     public static final RegistryObject<Item> RED_TOY = ITEMS.register(
@@ -89,5 +89,5 @@ public class InitItems {
 
     public static final RegistryObject<Item> AMONGUS_DRIP_SONG_MUSIC_DISC = ITEMS.register("music_disc_amongus_drip",
             () -> new RecordItem(4, ModSounds.AMONGUS_DRIP,
-                    new Item.Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1)));
+                    new Item.Properties().tab(AmodgusTab.AMODGUS_TAB).stacksTo(1)));
 }
