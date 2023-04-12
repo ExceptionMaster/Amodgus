@@ -1,6 +1,6 @@
 {
     "itemGroup.Amodgus": "Amodgus",
-    "item.amodgus.knife": "Cuchillo de Impostor",
+    "item.amodgus.knife": "§eCuchillo de Impostor",
     "item.amodgus.egghat": "Sombrero de Huevo",
     "item.amodgus.amongus_spawn_egg": "Generar Amongus",
     "item.amodgus.red_toy": "Juguete Rojo",
@@ -17,6 +17,6 @@
    	"item.amodgus.cyan_toy": "Juguete Cyan",
    	"item.amodgus.brown_toy": "Juguete Marrón",
     "entity.amodgus.amongus": "Amongus",
-    "item.amodgus.music_disc_amongus_drip": "Disco de Música",
+    "item.amodgus.music_disc_amongus_drip": "§bDisco de música",
   	"item.amodgus.music_disc_amongus_drip.desc": "YoshiBv - Amongus Drip"   
 }
