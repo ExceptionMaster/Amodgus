@@ -1,6 +1,6 @@
 {
     "itemGroup.Amodgus": "Amodgus",
-    "item.amodgus.knife": "Impostor Knife",
+    "item.amodgus.knife": "§eImpostor Knife",
     "item.amodgus.egghat": "Egg Hat",
     "item.amodgus.amongus_spawn_egg": "Amongus Spawn Egg",
    	"item.amodgus.red_toy": "Red Toy",
@@ -17,6 +17,6 @@
    	"item.amodgus.cyan_toy": "Cyan Toy",
    	"item.amodgus.brown_toy": "Brown Toy",
     "entity.amodgus.amongus": "Amongus",
-    "item.amodgus.music_disc_amongus_drip": "Music Disc",
+    "item.amodgus.music_disc_amongus_drip": "§bMusic Disc",
   	"item.amodgus.music_disc_amongus_drip.desc": "YoshiBv - Amongus Drip"  
 }
