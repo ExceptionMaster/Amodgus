@@ -17,6 +17,6 @@
    	"item.amodgus.cyan_toy": "Juguete Cyan",
    	"item.amodgus.brown_toy": "Juguete Marrón",
     "entity.amodgus.amongus": "Amongus",
-    "item.amodgus.amongus_drip_song_music_disc": "Disco de Música",
-  	"item.amodgus.amongus_drip_song_music_disc.desc": "YoshiBv - Amongus Drip"   
+    "item.amodgus.music_disc_amongus_drip": "Disco de Música",
+  	"item.amodgus.music_disc_amongus_drip.desc": "YoshiBv - Amongus Drip"   
 }
