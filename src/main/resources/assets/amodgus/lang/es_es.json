@@ -18,5 +18,7 @@
    	"item.amodgus.brown_toy": "Juguete Marrón",
     "entity.amodgus.amongus": "Amongus",
     "item.amodgus.music_disc_amongus_drip": "§bDisco de música",
-  	"item.amodgus.music_disc_amongus_drip.desc": "YoshiBv - Amongus Drip"   
+  	"item.amodgus.music_disc_amongus_drip.desc": "YoshiBv - Amongus Drip",
+  	"advancements.amodgus.title": "§dUn tipo sospechoso...",
+  	"advancements.amodgus.description": "§eDomestica un Amongus"
 }
