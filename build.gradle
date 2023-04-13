@@ -16,7 +16,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 
 
-version = '3.6.2'
+version = '1.0.0-RELEASE'
 group = 'es.yoshibv.amodgus' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'amodgus'
 
@@ -174,7 +174,7 @@ jar {
         attributes([
                 "Specification-Title"     : "amodgus",
                 "Specification-Vendor"    : "amodgusyoshibv",
-                "Specification-Version"   : "3.6.2", // We are version 1 of ourselves
+                "Specification-Version"   : "1.0.0-RELEASE", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "amodgusyoshibv",
