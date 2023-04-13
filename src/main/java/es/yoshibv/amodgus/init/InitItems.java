@@ -2,7 +2,6 @@ package es.yoshibv.amodgus.init;
 
 import es.yoshibv.amodgus.Amodgus;
 import es.yoshibv.amodgus.sound.ModSounds;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.item.SwordItem;
