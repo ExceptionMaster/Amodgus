@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class MobsInit {
 	public static final DeferredRegister<EntityType<?>> MOBS =
-			DeferredRegister.create(ForgeRegistries.ENTITIES, Amodgus.MODID);
+			DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Amodgus.MODID);
 	
 	public static final RegistryObject<EntityType<AmongusEntity>> AMONGUS = 
 			MOBS.register("amongus", 

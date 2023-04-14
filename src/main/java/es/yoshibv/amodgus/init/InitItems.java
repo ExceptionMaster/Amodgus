@@ -88,5 +88,5 @@ public class InitItems {
 
     public static final RegistryObject<Item> AMONGUS_DRIP_SONG_MUSIC_DISC = ITEMS.register("music_disc_amongus_drip",
             () -> new RecordItem(4, ModSounds.AMONGUS_DRIP,
-                    new Item.Properties().tab(AmodgusTab.AMODGUS_TAB).stacksTo(1)));
+                    new Item.Properties().tab(AmodgusTab.AMODGUS_TAB).stacksTo(1), 0));
 }

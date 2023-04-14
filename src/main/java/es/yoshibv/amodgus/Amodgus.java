@@ -5,7 +5,6 @@ import es.yoshibv.amodgus.events.MobsRendererEvents;
 import es.yoshibv.amodgus.init.InitItems;
 import es.yoshibv.amodgus.init.MobsInit;
 import es.yoshibv.amodgus.sound.ModSounds;
-import es.yoshibv.amodgus.world.structure.ModStructures;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -27,7 +26,6 @@ public class Amodgus {
         EVENT_BUS.register(new MobsAttrsEvent());
         EVENT_BUS.register(new MobsRendererEvents());
         MobsInit.register(bus);
-        ModStructures.register(bus);
         GeckoLib.initialize();
         ModSounds.register(bus);
         

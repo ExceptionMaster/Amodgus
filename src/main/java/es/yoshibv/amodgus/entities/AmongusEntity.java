@@ -1,6 +1,5 @@
 package es.yoshibv.amodgus.entities;
 
-import java.util.Random;
 import java.util.UUID;
 
 import org.jetbrains.annotations.Nullable;
@@ -17,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -275,7 +275,7 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
 	
 	
 	public static boolean canSpawn(EntityType<AmongusEntity> entity, LevelAccessor levelAccess, 
-			MobSpawnType spawnType, BlockPos pos, Random random) {
+			MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		return checkAnimalSpawnRules(entity, levelAccess, spawnType, pos, random);
 	}
     
