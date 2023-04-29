@@ -147,6 +147,8 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
         ItemStack itemstack = player.getItemInHand(hand);
         Item item = itemstack.getItem();
         
+        Item healItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus", "flask"));
+        
         Item[] itemsForTaming = {
         		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","red_toy")),
         		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","blue_toy")),
@@ -264,16 +266,23 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
                 return InteractionResult.SUCCESS;
             }
         }
-
-        if(isTame() && !this.level.isClientSide && hand == InteractionHand.MAIN_HAND) {
-            setSitting(!isSitting());
-            return InteractionResult.SUCCESS;
+        
+        if(player == this.getOwner()) {
+        	if(isTame() && !this.level.isClientSide && hand == InteractionHand.MAIN_HAND) {
+        		setSitting(!isSitting());
+        		return InteractionResult.SUCCESS;
+        	}
+        
+        	if(isTame() && !this.level.isClientSide && item == healItem) {
+        		this.setSitting(false);
+        		this.heal(2.0f);
+        		return InteractionResult.SUCCESS;
+        	}
         }
         
         return super.mobInteract(player, hand);
     }
-	
-	
+		
 	public static boolean canSpawn(EntityType<AmongusEntity> entity, LevelAccessor levelAccess, 
 			MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		return checkAnimalSpawnRules(entity, levelAccess, spawnType, pos, random);

@@ -85,6 +85,11 @@ public class InitItems {
             "orange_toy", () -> new Item(
                 new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
             );
+    
+    public static final RegistryObject<Item> FLASK = ITEMS.register(
+    		"flask", () -> new Item(
+    				new Item.Properties().tab(AmodgusTab.AMODGUS_TAB))
+    		);
 
     public static final RegistryObject<Item> AMONGUS_DRIP_SONG_MUSIC_DISC = ITEMS.register("music_disc_amongus_drip",
             () -> new RecordItem(4, ModSounds.AMONGUS_DRIP,
