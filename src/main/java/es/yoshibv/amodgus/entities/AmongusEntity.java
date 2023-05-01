@@ -4,10 +4,13 @@ import java.util.UUID;
 
 import org.jetbrains.annotations.Nullable;
 
+import es.yoshibv.amodgus.Amodgus;
 import es.yoshibv.amodgus.entities.variant.AmongusVariant;
 import es.yoshibv.amodgus.init.MobsInit;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -109,7 +112,12 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
             event.getController().setAnimation(new AnimationBuilder().addAnimation("sitting", true));
             return PlayState.CONTINUE;
         }
-
+        
+        if (this.isDeadOrDying()) {
+        	event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+        	return PlayState.STOP;
+        }
+        
         event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
         return PlayState.CONTINUE;
     }
@@ -139,7 +147,7 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
     }
 
     protected float getSoundVolume() {
-        return 0.2F;
+        return 0.4F;
     }
     
     @Override
@@ -147,22 +155,22 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
         ItemStack itemstack = player.getItemInHand(hand);
         Item item = itemstack.getItem();
         
-        Item healItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus", "flask"));
+        Item healItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"flask"));
         
         Item[] itemsForTaming = {
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","red_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","blue_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","cyan_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","green_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","lime_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","yellow_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","orange_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","pink_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","purple_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","magenta_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","black_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","white_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation("amodgus","brown_toy"))
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"red_toy")),
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"blue_toy")),
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"cyan_toy")),
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"green_toy")),
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"lime_toy")),
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"yellow_toy")),
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"orange_toy")),
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"pink_toy")),
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"purple_toy")),
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"magenta_toy")),
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"black_toy")),
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"white_toy")),
+        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"brown_toy"))
         };
 
         if (!isTame()) {
@@ -175,85 +183,19 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
 
                 if (!ForgeEventFactory.onAnimalTame(this, player)) {
                     if (!this.level.isClientSide) {
-                    	if(getVariant() == AmongusVariant.RED && item == itemsForTaming[0]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.RED && item == itemsForTaming[0]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.BLUE && item == itemsForTaming[1]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.CYAN && item == itemsForTaming[2]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.GREEN && item == itemsForTaming[3]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.LIME && item == itemsForTaming[4]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.YELLOW && item == itemsForTaming[5]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.ORANGE && item == itemsForTaming[6]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.PINK && item == itemsForTaming[7]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.PURPLE && item == itemsForTaming[8]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.MAGENTA && item == itemsForTaming[9]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.BLACK && item == itemsForTaming[10]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.WHITE && item == itemsForTaming[11]) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level.broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	} else if(getVariant() == AmongusVariant.BROWN && item == itemsForTaming[12]) {
+                    	if((getVariant() == AmongusVariant.RED && item == itemsForTaming[0]) ||
+                    		(getVariant() == AmongusVariant.BLUE && item == itemsForTaming[1]) ||
+                    		(getVariant() == AmongusVariant.CYAN && item == itemsForTaming[2]) ||
+                    		(getVariant() == AmongusVariant.GREEN && item == itemsForTaming[3]) ||
+                    		(getVariant() == AmongusVariant.LIME && item == itemsForTaming[4]) ||
+                    		(getVariant() == AmongusVariant.YELLOW && item == itemsForTaming[5]) ||
+                    		(getVariant() == AmongusVariant.ORANGE && item == itemsForTaming[6]) ||
+                    		(getVariant() == AmongusVariant.PINK && item == itemsForTaming[7]) ||
+                    		(getVariant() == AmongusVariant.PURPLE && item == itemsForTaming[8]) ||
+                    		(getVariant() == AmongusVariant.MAGENTA && item == itemsForTaming[9]) ||
+                    		(getVariant() == AmongusVariant.BLACK && item == itemsForTaming[10]) ||
+                    		(getVariant() == AmongusVariant.WHITE && item == itemsForTaming[11]) ||
+                    		(getVariant() == AmongusVariant.BROWN && item == itemsForTaming[12])) {
                     		super.tame(player);
                     		this.navigation.recomputePath();
                     		this.setTarget(null);
@@ -268,19 +210,31 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
         }
         
         if(player == this.getOwner()) {
-        	if(isTame() && !this.level.isClientSide && hand == InteractionHand.MAIN_HAND) {
-        		setSitting(!isSitting());
+        	if(isTame() && this.getHealth() < this.getMaxHealth() && item == healItem) {
+        		this.setSitting(false);
+        		this.setOrderedToSit(false);
+        		this.setHealth(this.getHealth() + 5.0f);
+        		this.summonParticles(ParticleTypes.HAPPY_VILLAGER);
         		return InteractionResult.SUCCESS;
         	}
-        
-        	if(isTame() && !this.level.isClientSide && item == healItem) {
-        		this.setSitting(false);
-        		this.heal(2.0f);
+        	
+        	if(isTame() && !this.level.isClientSide && hand == InteractionHand.MAIN_HAND) {
+        		setSitting(!isSitting());
         		return InteractionResult.SUCCESS;
         	}
         }
         
         return super.mobInteract(player, hand);
+    }
+    
+    private void summonParticles(ParticleOptions particleoptions) {
+
+        for(int i = 0; i < 7; ++i) {
+            double d0 = this.random.nextGaussian() * 0.02D;
+            double d1 = this.random.nextGaussian() * 0.02D;
+            double d2 = this.random.nextGaussian() * 0.02D;
+            this.level.addParticle(particleoptions, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
+        }
     }
 		
 	public static boolean canSpawn(EntityType<AmongusEntity> entity, LevelAccessor levelAccess, 
