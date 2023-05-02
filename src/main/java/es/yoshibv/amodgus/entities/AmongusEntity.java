@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import es.yoshibv.amodgus.Amodgus;
 import es.yoshibv.amodgus.entities.variant.AmongusVariant;
 import es.yoshibv.amodgus.init.MobsInit;
+import es.yoshibv.amodgus.sound.ModSounds;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -54,6 +55,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -68,12 +70,12 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
 	
 	private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT =
             SynchedEntityData.defineId(AmongusEntity.class, EntityDataSerializers.INT);
-		
+	
 	public AmongusEntity(EntityType<? extends TamableAnimal> entityType, Level world) {
 		super(entityType, world);
 		// TODO Apéndice de constructor generado automáticamente
 	}
-	
+		
 	public static AttributeSupplier setAttributes() {
 		return TamableAnimal.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 14.00)
@@ -101,39 +103,42 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
 		return MobsInit.AMONGUS.get().create(p_146743_);
     }
 		
-	@SuppressWarnings("removal")
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", (ILoopType)ILoopType.EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         }
 
         if (this.isSitting()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("sitting", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("sitting", (ILoopType)ILoopType.EDefaultLoopTypes.LOOP));
             return PlayState.CONTINUE;
         }
-        
-        if (this.isDeadOrDying()) {
-        	event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
-        	return PlayState.STOP;
-        }
-        
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", (ILoopType)ILoopType.EDefaultLoopTypes.LOOP));
         return PlayState.CONTINUE;
     }
-		
+	
+	private <E extends IAnimatable> PlayState deathPredicate(AnimationEvent<E> event) {
+		if (this.isDeadOrDying()) {
+			this.setHealth(0.5f);
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", (ILoopType)ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+			this.die(getLastDamageSource());
+			return PlayState.CONTINUE;
+		}
+		return PlayState.CONTINUE;
+	}
+			
 	@Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<AmongusEntity>(this, "controller",
-                0, this::predicate));
+		data.addAnimationController(new AnimationController<IAnimatable>((IAnimatable)this, "controller", 0.0f, this::predicate));
+		data.addAnimationController(new AnimationController<IAnimatable>((IAnimatable)this, "deathController", 0.0f, this::deathPredicate));
     }
 	
-
     @Override
     public AnimationFactory getFactory() {
         return this.factory;
     }
-
+        
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
         this.playSound(SoundEvents.NETHERITE_BLOCK_PLACE, 0.15F, 1.0F);
     }
@@ -143,7 +148,7 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
     }
 
     protected SoundEvent getDeathSound() {
-        return SoundEvents.DOLPHIN_DEATH;
+        return ModSounds.AMONGUS_DEATH.get();
     }
 
     protected float getSoundVolume() {

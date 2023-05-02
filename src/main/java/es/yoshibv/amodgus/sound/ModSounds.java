@@ -15,6 +15,9 @@ public class ModSounds {
 	public static final RegistryObject<SoundEvent> AMONGUS_DRIP = 
 			registerSoundEvent("amongus_drip");
 	
+	public static final RegistryObject<SoundEvent> AMONGUS_DEATH = 
+			registerSoundEvent("amongus_death");
+	
 	private static RegistryObject<SoundEvent> registerSoundEvent(String name){
 		return SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(Amodgus.MODID, name)));
 	}
