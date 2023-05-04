@@ -30,6 +30,5 @@ public class Amodgus {
         GeckoLib.initialize();
         ModSounds.register(bus);
         ModPaintings.register(bus);
-        
     }
 }
