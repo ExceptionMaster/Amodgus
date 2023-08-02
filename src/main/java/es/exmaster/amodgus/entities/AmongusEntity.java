@@ -1,5 +1,6 @@
 package es.exmaster.amodgus.entities;
 
+import java.util.Random;
 import java.util.UUID;
 
 import org.jetbrains.annotations.Nullable;
@@ -26,6 +27,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.NeutralMob;
@@ -49,6 +51,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.Team;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -87,8 +90,8 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
 	@Override
 	protected void registerGoals() {
 	      this.goalSelector.addGoal(1, new FloatGoal(this));
-	      this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
-	      this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
+	      this.targetSelector.addGoal(4, new OwnerHurtByTargetGoal(this));
+	      this.targetSelector.addGoal(5, new OwnerHurtTargetGoal(this));
 	      this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
 	      this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
 	      this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.2D, 8.0F, 2.0F, false));
@@ -305,8 +308,26 @@ public class AmongusEntity extends TamableAnimal implements IAnimatable, Neutral
                                         MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_,
                                         @Nullable CompoundTag p_146750_) {
         AmongusVariant variant = Util.getRandom(AmongusVariant.values(), this.random);
+        System.out.println("\n\nVariant:" + variant);
+        Level level = this.getLevel();
+        ServerLevel srvLevel = p_146746_.getLevel();
+        ImpostorEntity ie = new ImpostorEntity(MobsInit.IMPOSTOR.get(), level);
+        Random random = new Random();
+        double n = random.nextDouble();
+        System.out.println("Random number:" + n);
+        
         setVariant(variant);
-        return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
+        
+        if (n < 0.5 && variant.equals(AmongusVariant.BLACK)) {
+        	System.out.println("Se cumple la probabilidad del 50%");
+        	this.remove(Entity.RemovalReason.DISCARDED);
+        	ie.setPos(new Vec3(this.getX()+1, this.getY(), this.getZ()+1));
+        	srvLevel.addFreshEntity(ie);
+        } else {
+        	System.out.println("No se cumple la probabilidad del 50%");
+        }
+        
+        return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_); 
     }
 
     public AmongusVariant getVariant() {
