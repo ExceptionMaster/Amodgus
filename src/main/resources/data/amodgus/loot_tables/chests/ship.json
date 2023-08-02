@@ -16,18 +16,13 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:enchanted_golden_apple",
-          "weight": 2
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:music_disc_13",
           "weight": 15
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:music_disc_cat",
-          "weight": 15
+          "name": "amodgus:music_disc_amongus_drip",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -121,6 +116,22 @@
           ],
           "name": "minecraft:wheat",
           "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "amodgus:flask",
+          "weight": 25
         },
         {
           "type": "minecraft:item",

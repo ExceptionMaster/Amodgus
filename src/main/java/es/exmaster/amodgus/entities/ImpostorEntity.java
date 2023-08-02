@@ -1,7 +1,5 @@
 package es.exmaster.amodgus.entities;
 
-import java.util.function.Predicate;
-
 import org.jetbrains.annotations.Nullable;
 
 import es.exmaster.amodgus.entities.variant.AmongusVariant;
@@ -13,7 +11,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -22,7 +19,6 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.BreakDoorGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
@@ -51,11 +47,6 @@ public class ImpostorEntity extends Monster implements IAnimatable {
 	private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT =
             SynchedEntityData.defineId(ImpostorEntity.class, EntityDataSerializers.INT);
 	
-	/*private static final Predicate<Difficulty> DOOR_BREAKING_PREDICATE = (p_34284_) -> {
-	      return p_34284_ == Difficulty.HARD;
-	   };
-	private final BreakDoorGoal breakDoorGoal = new BreakDoorGoal(this, DOOR_BREAKING_PREDICATE);*/
-	
 	public ImpostorEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 		// TODO Apéndice de constructor generado automáticamente
@@ -76,7 +67,6 @@ public class ImpostorEntity extends Monster implements IAnimatable {
 	      this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 6.0f));
 	      this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
 	      this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-	      //this.goalSelector.addGoal(5, breakDoorGoal);
 	      this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers(ImpostorEntity.class));
 	      this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	      this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, AmongusEntity.class, false));
