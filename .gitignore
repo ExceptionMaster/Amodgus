@@ -11,3 +11,4 @@ bin/
 /gradlew
 /gradlew.bat
 /settings.gradle
+/.idea/
