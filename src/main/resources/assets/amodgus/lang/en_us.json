@@ -1,8 +1,10 @@
 {
     "itemGroup.Amodgus": "Amodgus",
     "item.amodgus.knife": "§eImpostor Knife",
+    "item.amodgus.flask": "§aFlask",
     "item.amodgus.egghat": "Egg Hat",
     "item.amodgus.amongus_spawn_egg": "Amongus Spawn Egg",
+    "item.amodgus.impostor_spawn_egg": "Impostor Spawn Egg",
    	"item.amodgus.red_toy": "Red Toy",
    	"item.amodgus.black_toy": "Black Toy",
    	"item.amodgus.white_toy": "White Toy",
@@ -17,6 +19,7 @@
    	"item.amodgus.cyan_toy": "Cyan Toy",
    	"item.amodgus.brown_toy": "Brown Toy",
     "entity.amodgus.amongus": "Amongus",
+    "entity.amodgus.impostor": "Amongus",
     "item.amodgus.music_disc_amongus_drip": "§bMusic Disc",
   	"item.amodgus.music_disc_amongus_drip.desc": "Leonz - Amongus Drip"  
 }

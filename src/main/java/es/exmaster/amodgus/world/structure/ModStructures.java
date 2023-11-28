@@ -1,6 +1,6 @@
-package es.yoshibv.amodgus.world.structure;
+package es.exmaster.amodgus.world.structure;
 
-import es.yoshibv.amodgus.Amodgus;
+import es.exmaster.amodgus.Amodgus;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -24,8 +24,8 @@ public class ModStructures {
      * this base structure will have the resourcelocation of structure_tutorial:sky_structures.
      */
     public static final RegistryObject<StructureFeature<?>> SKY_STRUCTURES = DEFERRED_REGISTRY_STRUCTURE.register("sky_structures", SkyStructures::new);
-    
+
     public static void register(IEventBus eventBus) {
-    	DEFERRED_REGISTRY_STRUCTURE.register(eventBus);
+        DEFERRED_REGISTRY_STRUCTURE.register(eventBus);
     }
 }

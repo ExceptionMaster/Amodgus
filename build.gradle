@@ -16,8 +16,8 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 
 
-version = '1.0.0-RELEASE'
-group = 'es.yoshibv.amodgus' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = '1.18.2-1.3.1'
+group = 'es.exmaster.amodgus' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'amodgus'
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
@@ -149,6 +149,8 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.jetbrains:annotations:24.0.0'
+
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
@@ -173,11 +175,11 @@ jar {
     manifest {
         attributes([
                 "Specification-Title"     : "amodgus",
-                "Specification-Vendor"    : "amodgusyoshibv",
-                "Specification-Version"   : "1.0.0-RELEASE", // We are version 1 of ourselves
+                "Specification-Vendor"    : "amodgus",
+                "Specification-Version"   : "1.18.2-1.3.1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "amodgusyoshibv",
+                "Implementation-Vendor"   : "amodgus",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
