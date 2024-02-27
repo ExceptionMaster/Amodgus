@@ -1,6 +1,6 @@
-package es.exmaster.amodgus.world.structure;
+package dev.galliard.amodgus.world.structure;
 
-import es.exmaster.amodgus.Amodgus;
+import dev.galliard.amodgus.Amodgus;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;

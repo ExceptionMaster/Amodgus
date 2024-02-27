@@ -1,9 +1,9 @@
-package es.exmaster.amodgus.world.structure;
+package dev.galliard.amodgus.world.structure;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import es.exmaster.amodgus.Amodgus;
+import dev.galliard.amodgus.Amodgus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.GenerationStep;
