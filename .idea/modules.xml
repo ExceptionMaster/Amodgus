@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Amodgus.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Amodgus.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Amodgus.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Amodgus.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/es.exmaster.amodgus.Amodgus.main.iml" filepath="$PROJECT_DIR$/.idea/modules/es.exmaster.amodgus.Amodgus.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/es.exmaster.amodgus.Amodgus.test.iml" filepath="$PROJECT_DIR$/.idea/modules/es.exmaster.amodgus.Amodgus.test.iml" />
+    </modules>
+  </component>
+</project>

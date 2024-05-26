@@ -1,4 +1,4 @@
-package es.exmaster.amodgus.world.structure;
+package dev.gallardo.amodgus.world.structure;
 
 import es.exmaster.amodgus.Amodgus;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;

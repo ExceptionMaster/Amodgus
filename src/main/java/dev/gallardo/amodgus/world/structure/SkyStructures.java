@@ -1,4 +1,4 @@
-package es.exmaster.amodgus.world.structure;
+package dev.gallardo.amodgus.world.structure;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
