@@ -18,31 +18,31 @@ public class AmongusRenderer extends GeoEntityRenderer<AmongusEntity> {
 	public static final Map<AmongusVariant, ResourceLocation> LOCATION_BY_VARIANT =
             Util.make(Maps.newEnumMap(AmongusVariant.class), (p_114874_) -> {
                 p_114874_.put(AmongusVariant.RED,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_red.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_red.png"));
                 p_114874_.put(AmongusVariant.YELLOW,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_yellow.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_yellow.png"));
                 p_114874_.put(AmongusVariant.ORANGE,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_orange.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_orange.png"));
                 p_114874_.put(AmongusVariant.GREEN,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_green.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_green.png"));
                 p_114874_.put(AmongusVariant.LIME,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_lime.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_lime.png"));
                 p_114874_.put(AmongusVariant.PURPLE,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_purple.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_purple.png"));
                 p_114874_.put(AmongusVariant.MAGENTA,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_magenta.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_magenta.png"));
                 p_114874_.put(AmongusVariant.PINK,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_pink.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_pink.png"));
                 p_114874_.put(AmongusVariant.WHITE,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_white.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_white.png"));
                 p_114874_.put(AmongusVariant.BLACK,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_black.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_black.png"));
                 p_114874_.put(AmongusVariant.BROWN,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_brown.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_brown.png"));
                 p_114874_.put(AmongusVariant.BLUE,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_blue.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_blue.png"));
                 p_114874_.put(AmongusVariant.CYAN,
-                        new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_cyan.png"));
+                        new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_cyan.png"));
 
             });
 	
@@ -59,14 +59,4 @@ public class AmongusRenderer extends GeoEntityRenderer<AmongusEntity> {
 		// TODO Apéndice de método generado automáticamente
 		return LOCATION_BY_VARIANT.get(object.getVariant());
 	}
-	
-	/*@Override
-    public RenderType getRenderType(AmongusEntity animatable, float partialTicks, PoseStack stack,
-                                    @Nullable MultiBufferSource renderTypeBuffer,
-                                    @Nullable VertexConsumer vertexBuilder, int packedLightIn,
-                                    ResourceLocation textureLocation) {
-        stack.scale(1.0f, 1.0f, 1.0f);
-        return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
-    }*/
-	
 }

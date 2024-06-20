@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.jetbrains.annotations.Nullable;
 
 import dev.gallardo.amodgus.Amodgus;
+import dev.gallardo.amodgus.common.AmongusAnimations;
 import dev.gallardo.amodgus.entities.variant.AmongusVariant;
 import dev.gallardo.amodgus.init.MobsInit;
 import dev.gallardo.amodgus.sound.ModSounds;
@@ -59,8 +60,6 @@ import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager.ControllerRegistrar;
 import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
@@ -103,32 +102,35 @@ public class AmongusEntity extends TamableAnimal implements GeoAnimatable, Neutr
     @Override
     public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
 		return MobsInit.AMONGUS.get().create(p_146743_);
-    }
-		
-	private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(RawAnimation.begin().thenLoop("walk"));
-            return PlayState.CONTINUE;
-        }
-
-        if (this.isSitting()) {
-            event.getController().setAnimation(RawAnimation.begin().thenLoop("sitting"));
-            return PlayState.CONTINUE;
-        }
-
-        event.getController().setAnimation(RawAnimation.begin().thenLoop("idle"));
-        return PlayState.CONTINUE;
-    }
-	
-	private <E extends GeoAnimatable> PlayState deathPredicate(AnimationState<E> event) {
-		if (this.isDeadOrDying()) {
-			this.setHealth(0.5f);
-			event.getController().setAnimation(RawAnimation.begin().thenPlay("death"));
-			this.die(getLastDamageSource());
-			return PlayState.CONTINUE;
-		}
-		return PlayState.CONTINUE;
 	}
+
+	@Override
+	public void registerControllers(ControllerRegistrar controllers) {
+		// TODO Auto-generated method stub
+		controllers.add(new AnimationController<>(this, "walk/idle", 0,
+				state -> {
+					if(state.isMoving()) {
+						return state.setAndContinue(AmongusAnimations.WALK);
+					} else {
+						return state.setAndContinue(AmongusAnimations.IDLE);
+					}
+				}));
+		controllers.add(new AnimationController<>(this, "sitting", 0,
+				state -> {
+					if(this.isSitting()) {
+						return state.setAndContinue(AmongusAnimations.SITTING);
+					}
+					return PlayState.STOP;
+				}));
+		controllers.add(new AnimationController<>(this, "death", 0,
+				state -> {
+					if(state.getAnimatable().isDeadOrDying()) {
+						return state.setAndContinue(AmongusAnimations.DEATH);
+					}
+					return PlayState.STOP;
+				}));
+	}
+
         
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
         this.playSound(SoundEvents.NETHERITE_BLOCK_PLACE, 0.15F, 1.0F);
@@ -358,12 +360,6 @@ public class AmongusEntity extends TamableAnimal implements GeoAnimatable, Neutr
 		
 	}
 
-	@Override
-	public void registerControllers(ControllerRegistrar controllers) {
-		// TODO Auto-generated method stub
-		controllers.add(new AnimationController<GeoAnimatable>((GeoAnimatable)this, "controller", 0, this::predicate));
-		controllers.add(new AnimationController<GeoAnimatable>((GeoAnimatable)this, "deathController", 0, this::deathPredicate));
-	}
 
 	@Override
 	public AnimatableInstanceCache getAnimatableInstanceCache() {

@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "amodgus:items/green_toy"
+        "layer0": "amodgus:item/green_toy"
     }
 }

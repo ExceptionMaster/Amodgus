@@ -2,6 +2,7 @@ package dev.gallardo.amodgus.entities;
 
 import org.jetbrains.annotations.Nullable;
 
+import dev.gallardo.amodgus.common.AmongusAnimations;
 import dev.gallardo.amodgus.entities.variant.AmongusVariant;
 import dev.gallardo.amodgus.sound.ModSounds;
 import net.minecraft.core.BlockPos;
@@ -34,10 +35,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager.ControllerRegistrar;
-import software.bernie.geckolib.core.animation.Animation.LoopType;
 import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
@@ -72,24 +70,24 @@ public class ImpostorEntity extends Monster implements GeoAnimatable {
 	      this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, AmongusEntity.class, false));
 	}
 	
-	private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(RawAnimation.begin().then("walk", LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-
-        event.getController().setAnimation(RawAnimation.begin().then("idle", LoopType.LOOP));
-        return PlayState.CONTINUE;
-    }
-	
-	private <E extends GeoAnimatable> PlayState deathPredicate(AnimationState<E> event) {
-		if (this.isDeadOrDying()) {
-			this.setHealth(0.5f);
-			event.getController().setAnimation(RawAnimation.begin().then("idle", LoopType.PLAY_ONCE));
-			this.die(getLastDamageSource());
-			return PlayState.CONTINUE;
-		}
-		return PlayState.CONTINUE;
+	@Override
+	public void registerControllers(ControllerRegistrar controllers) {
+		// TODO Auto-generated method stub
+		controllers.add(new AnimationController<>(this, "walk/idle", 0,
+				state -> {
+					if(state.isMoving()) {
+						return state.setAndContinue(AmongusAnimations.WALK);
+					} else {
+						return state.setAndContinue(AmongusAnimations.IDLE);
+					}
+				}));
+		controllers.add(new AnimationController<>(this, "death", 0,
+				state -> {
+					if(state.getAnimatable().isDeadOrDying()) {
+						return state.setAndContinue(AmongusAnimations.DEATH);						
+					}
+					return PlayState.STOP;
+				}));
 	}
         
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
@@ -148,12 +146,6 @@ public class ImpostorEntity extends Monster implements GeoAnimatable {
         this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
 
-	@Override
-	public void registerControllers(ControllerRegistrar controllers) {
-		// TODO Auto-generated method stub
-		controllers.add(new AnimationController<GeoAnimatable>((GeoAnimatable)this, "controller", 0, this::predicate));
-		controllers.add(new AnimationController<GeoAnimatable>((GeoAnimatable)this, "deathController", 0, this::deathPredicate));
-	}
 
 	@Override
 	public AnimatableInstanceCache getAnimatableInstanceCache() {
