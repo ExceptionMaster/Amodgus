@@ -102,7 +102,6 @@ public class AmongusEntity extends TamableAnimal implements GeoEntity, NeutralMo
 
 	@Override
 	public void registerControllers(ControllerRegistrar controllers) {
-		// TODO Auto-generated method stub
 		controllers.add(new AnimationController<>(this, "walk/idle", 0,
 				state -> {
 					if(state.isMoving()) {
@@ -120,10 +119,8 @@ public class AmongusEntity extends TamableAnimal implements GeoEntity, NeutralMo
 				}));
 		controllers.add(new AnimationController<>(this, "death", 0,
 				state -> {
-					if(state.getAnimatable().isDeadOrDying()) {
-						this.setHealth(0.5f);
-						state.setAnimation(AmongusAnimations.DEATH);
-						this.die(getLastDamageSource());
+					if(this.isDeadOrDying()) {
+						return state.setAndContinue(AmongusAnimations.DEATH);
 					}
 					return PlayState.STOP;
 				}));
@@ -212,7 +209,9 @@ public class AmongusEntity extends TamableAnimal implements GeoEntity, NeutralMo
 				return InteractionResult.SUCCESS;
 			}
 
-			if (isTame() && !this.level().isClientSide && hand == InteractionHand.MAIN_HAND) {
+			if (isTame() && !this.level().isClientSide && 
+					hand == InteractionHand.MAIN_HAND &&
+					player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
 				setSitting(!isSitting());
 				return InteractionResult.SUCCESS;
 			}
@@ -326,37 +325,31 @@ public class AmongusEntity extends TamableAnimal implements GeoEntity, NeutralMo
 
 	@Override
 	public AnimatableInstanceCache getAnimatableInstanceCache() {
-		// TODO Auto-generated method stub
 		return this.factory;
 	}
 
 	@Override
 	public int getRemainingPersistentAngerTime() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void setRemainingPersistentAngerTime(int p_21673_) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public UUID getPersistentAngerTarget() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setPersistentAngerTarget(UUID p_21672_) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void startPersistentAngerTimer() {
-		// TODO Auto-generated method stub
 		
 	}
 }

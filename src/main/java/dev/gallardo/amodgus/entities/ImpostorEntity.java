@@ -47,7 +47,6 @@ public class ImpostorEntity extends Monster implements GeoEntity {
 
 	public ImpostorEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
-		// TODO Apéndice de constructor generado automáticamente
 	}
 
 	public static AttributeSupplier setAttributes() {
@@ -69,7 +68,6 @@ public class ImpostorEntity extends Monster implements GeoEntity {
 
 	@Override
 	public void registerControllers(ControllerRegistrar controllers) {
-		// TODO Auto-generated method stub
 		controllers.add(new AnimationController<>(this, "walk/idle", 0,
 				state -> {
 					if(state.isMoving()) {
@@ -80,10 +78,8 @@ public class ImpostorEntity extends Monster implements GeoEntity {
 				}));
 		controllers.add(new AnimationController<>(this, "death", 0,
 				state -> {
-					if(state.getAnimatable().isDeadOrDying()) {
-						this.setHealth(0.5f);
-						state.setAnimation(AmongusAnimations.DEATH);
-						this.die(getLastDamageSource());
+					if(this.isDeadOrDying()) {
+						return state.setAndContinue(AmongusAnimations.DEATH);
 					}
 					return PlayState.STOP;
 				}));
@@ -146,7 +142,6 @@ public class ImpostorEntity extends Monster implements GeoEntity {
 
 	@Override
 	public AnimatableInstanceCache getAnimatableInstanceCache() {
-		// TODO Auto-generated method stub
 		return this.factory;
 	}
 }
