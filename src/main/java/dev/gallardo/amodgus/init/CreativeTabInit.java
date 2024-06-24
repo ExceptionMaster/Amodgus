@@ -28,7 +28,6 @@ public class CreativeTabInit {
     				.icon(ItemsInit.KNIFE.get()::getDefaultInstance)
     				.displayItems((displayParams, output) -> 
     					TAB_ITEMS.forEach(item -> output.accept(item.get())))
-    				.withSearchBar()
     				.build()
     );
 	

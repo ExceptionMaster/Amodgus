@@ -56,51 +56,47 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.Team;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.registries.ForgeRegistries;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager.ControllerRegistrar;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-
-public class AmongusEntity extends TamableAnimal implements GeoAnimatable, NeutralMob {
+public class AmongusEntity extends TamableAnimal implements GeoEntity, NeutralMob {
 	private AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-	
-	private static final EntityDataAccessor<Boolean> SITTING = 
-			SynchedEntityData.defineId(AmongusEntity.class, EntityDataSerializers.BOOLEAN);
-	
-	private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT =
-            SynchedEntityData.defineId(AmongusEntity.class, EntityDataSerializers.INT);
-	
+
+	private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(AmongusEntity.class,
+			EntityDataSerializers.BOOLEAN);
+
+	private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData
+			.defineId(AmongusEntity.class, EntityDataSerializers.INT);
+
 	public AmongusEntity(EntityType<? extends TamableAnimal> entityType, Level world) {
 		super(entityType, world);
 	}
-		
+
 	public static AttributeSupplier setAttributes() {
-		return TamableAnimal.createMobAttributes()
-				.add(Attributes.MAX_HEALTH, 14.00)
-				.add(Attributes.ATTACK_DAMAGE,6.0f)
-				.add(Attributes.ATTACK_SPEED,1.8f)
-				.add(Attributes.MOVEMENT_SPEED, 0.3f).build();
+		return TamableAnimal.createMobAttributes().add(Attributes.MAX_HEALTH, 14.00).add(Attributes.ATTACK_DAMAGE, 6.0f)
+				.add(Attributes.ATTACK_SPEED, 1.8f).add(Attributes.MOVEMENT_SPEED, 0.3f).build();
 	}
-	
+
 	@Override
 	protected void registerGoals() {
-	      this.goalSelector.addGoal(1, new FloatGoal(this));
-	      this.targetSelector.addGoal(4, new OwnerHurtByTargetGoal(this));
-	      this.targetSelector.addGoal(5, new OwnerHurtTargetGoal(this));
-	      this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-	      this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
-	      this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.2D, 8.0F, 2.0F, false));
-	      this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 6.0f));
-	      this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
-	      this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		this.goalSelector.addGoal(1, new FloatGoal(this));
+		this.targetSelector.addGoal(4, new OwnerHurtByTargetGoal(this));
+		this.targetSelector.addGoal(5, new OwnerHurtTargetGoal(this));
+		this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
+		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
+		this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.2D, 8.0F, 2.0F, false));
+		this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 6.0f));
+		this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 	}
-	
+
 	@Nullable
-    @Override
-    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
+	@Override
+	public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
 		return MobsInit.AMONGUS.get().create(p_146743_);
 	}
 
@@ -125,239 +121,206 @@ public class AmongusEntity extends TamableAnimal implements GeoAnimatable, Neutr
 		controllers.add(new AnimationController<>(this, "death", 0,
 				state -> {
 					if(state.getAnimatable().isDeadOrDying()) {
-						return state.setAndContinue(AmongusAnimations.DEATH);
+						this.setHealth(0.5f);
+						state.setAnimation(AmongusAnimations.DEATH);
+						this.die(getLastDamageSource());
 					}
 					return PlayState.STOP;
 				}));
 	}
 
-        
-    protected void playStepSound(BlockPos pos, BlockState blockIn) {
-        this.playSound(SoundEvents.NETHERITE_BLOCK_PLACE, 0.15F, 1.0F);
-    }
+	protected void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(SoundEvents.NETHERITE_BLOCK_PLACE, 0.15F, 1.0F);
+	}
 
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.DOLPHIN_HURT;
-    }
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		return SoundEvents.DOLPHIN_HURT;
+	}
 
-    protected SoundEvent getDeathSound() {
-        return ModSounds.AMONGUS_DEATH.get();
-    }
+	protected SoundEvent getDeathSound() {
+		return ModSounds.AMONGUS_DEATH.get();
+	}
 
-    protected float getSoundVolume() {
-        return 0.4F;
-    }
-    
-    @SuppressWarnings("resource")
+	protected float getSoundVolume() {
+		return 0.4F;
+	}
+
+	@SuppressWarnings("resource")
 	@Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        ItemStack itemstack = player.getItemInHand(hand);
-        Item item = itemstack.getItem();
-        
-        Item healItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"flask"));
-        
-        Item[] itemsForTaming = {
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"red_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"blue_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"cyan_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"green_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"lime_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"yellow_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"orange_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"pink_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"purple_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"magenta_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"black_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"white_toy")),
-        		ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID,"brown_toy"))
-        };
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
+		ItemStack itemstack = player.getItemInHand(hand);
+		Item item = itemstack.getItem();
 
-        if (!isTame()) {
-            if (this.level().isClientSide) {
-                return InteractionResult.CONSUME;
-            } else {
-                if (!player.getAbilities().instabuild) {
-                    itemstack.shrink(1);
-                }
+		Item healItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "flask"));
 
-                if (!ForgeEventFactory.onAnimalTame(this, player)) {
-                    if (!this.level().isClientSide) {
-                    	if((getVariant() == AmongusVariant.RED && item == itemsForTaming[0]) ||
-                    		(getVariant() == AmongusVariant.BLUE && item == itemsForTaming[1]) ||
-                    		(getVariant() == AmongusVariant.CYAN && item == itemsForTaming[2]) ||
-                    		(getVariant() == AmongusVariant.GREEN && item == itemsForTaming[3]) ||
-                    		(getVariant() == AmongusVariant.LIME && item == itemsForTaming[4]) ||
-                    		(getVariant() == AmongusVariant.YELLOW && item == itemsForTaming[5]) ||
-                    		(getVariant() == AmongusVariant.ORANGE && item == itemsForTaming[6]) ||
-                    		(getVariant() == AmongusVariant.PINK && item == itemsForTaming[7]) ||
-                    		(getVariant() == AmongusVariant.PURPLE && item == itemsForTaming[8]) ||
-                    		(getVariant() == AmongusVariant.MAGENTA && item == itemsForTaming[9]) ||
-                    		(getVariant() == AmongusVariant.BLACK && item == itemsForTaming[10]) ||
-                    		(getVariant() == AmongusVariant.WHITE && item == itemsForTaming[11]) ||
-                    		(getVariant() == AmongusVariant.BROWN && item == itemsForTaming[12])) {
-                    		super.tame(player);
-                    		this.navigation.recomputePath();
-                    		this.setTarget(null);
-                    		this.level().broadcastEntityEvent(this, (byte)7);
-                    		setSitting(true);
-                    	}
-                    }
-                }
+		Item[] itemsForTaming = { ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "red_toy")),
+				ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "blue_toy")),
+				ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "cyan_toy")),
+				ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "green_toy")),
+				ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "lime_toy")),
+				ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "yellow_toy")),
+				ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "orange_toy")),
+				ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "pink_toy")),
+				ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "purple_toy")),
+				ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "magenta_toy")),
+				ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "black_toy")),
+				ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "white_toy")),
+				ForgeRegistries.ITEMS.getValue(new ResourceLocation(Amodgus.MODID, "brown_toy")) };
 
-                return InteractionResult.SUCCESS;
-            }
-        }
-        
-        if(player == this.getOwner()) {
-        	if(isTame() && this.getHealth() < this.getMaxHealth() && item == healItem) {
-        		this.setSitting(false);
-        		this.setOrderedToSit(false);
-        		this.setHealth(this.getHealth() + 5.0f);
-        		this.summonParticles(ParticleTypes.HAPPY_VILLAGER);
-        		return InteractionResult.SUCCESS;
-        	}
-        	
-        	if(isTame() && !this.level().isClientSide && hand == InteractionHand.MAIN_HAND) {
-        		setSitting(!isSitting());
-        		return InteractionResult.SUCCESS;
-        	}
-        }
-        
-        
-        return super.mobInteract(player, hand);
-    }
-    
-    private void summonParticles(ParticleOptions particleoptions) {
+		if (!isTame()) {
+			if (this.level().isClientSide) {
+				return InteractionResult.CONSUME;
+			} else {
+				if (!player.getAbilities().instabuild) {
+					itemstack.shrink(1);
+				}
 
-        for(int i = 0; i < 7; ++i) {
-            double d0 = this.random.nextGaussian() * 0.02D;
-            double d1 = this.random.nextGaussian() * 0.02D;
-            double d2 = this.random.nextGaussian() * 0.02D;
-            this.level().addParticle(particleoptions, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
-        }
-    }
-		
-	public static boolean canSpawn(EntityType<AmongusEntity> entity, LevelAccessor levelAccess, 
-			MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+				if (!ForgeEventFactory.onAnimalTame(this, player)) {
+					if (!this.level().isClientSide) {
+						if ((getVariant() == AmongusVariant.RED && item == itemsForTaming[0])
+								|| (getVariant() == AmongusVariant.BLUE && item == itemsForTaming[1])
+								|| (getVariant() == AmongusVariant.CYAN && item == itemsForTaming[2])
+								|| (getVariant() == AmongusVariant.GREEN && item == itemsForTaming[3])
+								|| (getVariant() == AmongusVariant.LIME && item == itemsForTaming[4])
+								|| (getVariant() == AmongusVariant.YELLOW && item == itemsForTaming[5])
+								|| (getVariant() == AmongusVariant.ORANGE && item == itemsForTaming[6])
+								|| (getVariant() == AmongusVariant.PINK && item == itemsForTaming[7])
+								|| (getVariant() == AmongusVariant.PURPLE && item == itemsForTaming[8])
+								|| (getVariant() == AmongusVariant.MAGENTA && item == itemsForTaming[9])
+								|| (getVariant() == AmongusVariant.BLACK && item == itemsForTaming[10])
+								|| (getVariant() == AmongusVariant.WHITE && item == itemsForTaming[11])
+								|| (getVariant() == AmongusVariant.BROWN && item == itemsForTaming[12])) {
+							super.tame(player);
+							this.navigation.recomputePath();
+							this.setTarget(null);
+							this.level().broadcastEntityEvent(this, (byte) 7);
+							setSitting(true);
+						}
+					}
+				}
+
+				return InteractionResult.SUCCESS;
+			}
+		}
+
+		if (player == this.getOwner()) {
+			if (isTame() && this.getHealth() < this.getMaxHealth() && item == healItem) {
+				this.setSitting(false);
+				this.setOrderedToSit(false);
+				this.setHealth(this.getHealth() + 5.0f);
+				this.summonParticles(ParticleTypes.HAPPY_VILLAGER);
+				return InteractionResult.SUCCESS;
+			}
+
+			if (isTame() && !this.level().isClientSide && hand == InteractionHand.MAIN_HAND) {
+				setSitting(!isSitting());
+				return InteractionResult.SUCCESS;
+			}
+		}
+
+		return super.mobInteract(player, hand);
+	}
+
+	private void summonParticles(ParticleOptions particleoptions) {
+
+		for (int i = 0; i < 7; ++i) {
+			double d0 = this.random.nextGaussian() * 0.02D;
+			double d1 = this.random.nextGaussian() * 0.02D;
+			double d2 = this.random.nextGaussian() * 0.02D;
+			this.level().addParticle(particleoptions, this.getRandomX(1.0D), this.getRandomY() + 0.5D,
+					this.getRandomZ(1.0D), d0, d1, d2);
+		}
+	}
+
+	public static boolean canSpawn(EntityType<AmongusEntity> entity, LevelAccessor levelAccess, MobSpawnType spawnType,
+			BlockPos pos, RandomSource random) {
 		return checkAnimalSpawnRules(entity, levelAccess, spawnType, pos, random);
 	}
-    
-	@Override
-    public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        setSitting(tag.getBoolean("isSitting"));
-        this.entityData.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putBoolean("isSitting", this.isSitting());
-        tag.putInt("Variant", this.getTypeVariant());
-    }
-
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(SITTING, false);
-        this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
-    }
-
-    public void setSitting(boolean sitting) {
-        this.entityData.set(SITTING, sitting);
-        this.setOrderedToSit(sitting);
-    }
-
-    public boolean isSitting() {
-        return this.entityData.get(SITTING);
-    }
-
-    @Override
-    public Team getTeam() {
-        return super.getTeam();
-    }
-
-    public boolean canBeLeashed(Player player) {
-        return false;
-    }
-
-    @Override
-    public void setTame(boolean tamed) {
-        super.setTame(tamed);
-        if (tamed) {
-            getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D);
-            getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(6.0D);
-            getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue((double)0.3f);
-        } else {
-            getAttribute(Attributes.MAX_HEALTH).setBaseValue(14.0D);
-            getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(3.0D);
-            getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue((double)0.3f);
-        }
-    }
-    
-    /* VARIANTS */
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_,
-                                        MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_,
-                                        @Nullable CompoundTag p_146750_) {
-        AmongusVariant variant = Util.getRandom(AmongusVariant.values(), this.random);
-        Level level = this.level();
-        ServerLevel srvLevel = p_146746_.getLevel();
-        ImpostorEntity ie = new ImpostorEntity(MobsInit.IMPOSTOR.get(), level);
-        Random random = new Random();
-        double n = random.nextDouble();
-        
-        setVariant(variant);
-        
-        if (n < 0.5 && variant.equals(AmongusVariant.BLACK)) {
-        	this.remove(Entity.RemovalReason.DISCARDED);
-        	ie.setPos(new Vec3(this.getX()+1, this.getY(), this.getZ()+1));
-        	srvLevel.addFreshEntity(ie);
-        }
-        
-        return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_); 
-    }
-
-    public AmongusVariant getVariant() {
-        return AmongusVariant.byId(this.getTypeVariant() & 255);
-    }
-
-    private int getTypeVariant() {
-        return this.entityData.get(DATA_ID_TYPE_VARIANT);
-    }
-
-    private void setVariant(AmongusVariant variant) {
-        this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
-    }
-    
 
 	@Override
-	public int getRemainingPersistentAngerTime() {
-		// TODO Apéndice de método generado automáticamente
-		return 0;
+	public void readAdditionalSaveData(CompoundTag tag) {
+		super.readAdditionalSaveData(tag);
+		setSitting(tag.getBoolean("isSitting"));
+		this.entityData.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
 	}
 
 	@Override
-	public void setRemainingPersistentAngerTime(int p_21673_) {
-		// TODO Apéndice de método generado automáticamente
-		
+	public void addAdditionalSaveData(CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
+		tag.putBoolean("isSitting", this.isSitting());
+		tag.putInt("Variant", this.getTypeVariant());
 	}
 
 	@Override
-	public UUID getPersistentAngerTarget() {
-		// TODO Apéndice de método generado automáticamente
-		return null;
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(SITTING, false);
+		this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
+	}
+
+	public void setSitting(boolean sitting) {
+		this.entityData.set(SITTING, sitting);
+		this.setOrderedToSit(sitting);
+	}
+
+	public boolean isSitting() {
+		return this.entityData.get(SITTING);
 	}
 
 	@Override
-	public void setPersistentAngerTarget(UUID p_21672_) {
-		// TODO Apéndice de método generado automáticamente
-		
+	public Team getTeam() {
+		return super.getTeam();
+	}
+
+	public boolean canBeLeashed(Player player) {
+		return false;
 	}
 
 	@Override
-	public void startPersistentAngerTimer() {
-		// TODO Apéndice de método generado automáticamente
-		
+	public void setTame(boolean tamed) {
+		super.setTame(tamed);
+		if (tamed) {
+			getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D);
+			getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(6.0D);
+			getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue((double) 0.3f);
+		} else {
+			getAttribute(Attributes.MAX_HEALTH).setBaseValue(14.0D);
+			getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(3.0D);
+			getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue((double) 0.3f);
+		}
+	}
+
+	/* VARIANTS */
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_,
+			MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_, @Nullable CompoundTag p_146750_) {
+		AmongusVariant variant = Util.getRandom(AmongusVariant.values(), this.random);
+		Level level = this.level();
+		ServerLevel srvLevel = p_146746_.getLevel();
+		ImpostorEntity ie = new ImpostorEntity(MobsInit.IMPOSTOR.get(), level);
+		Random random = new Random();
+		double n = random.nextDouble();
+
+		setVariant(variant);
+
+		if (n < 0.5 && variant.equals(AmongusVariant.BLACK)) {
+			this.remove(Entity.RemovalReason.DISCARDED);
+			ie.setPos(new Vec3(this.getX() + 1, this.getY(), this.getZ() + 1));
+			srvLevel.addFreshEntity(ie);
+		}
+
+		return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
+	}
+
+	public AmongusVariant getVariant() {
+		return AmongusVariant.byId(this.getTypeVariant() & 255);
+	}
+
+	private int getTypeVariant() {
+		return this.entityData.get(DATA_ID_TYPE_VARIANT);
+	}
+
+	private void setVariant(AmongusVariant variant) {
+		this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
 	}
 
 
@@ -368,9 +331,32 @@ public class AmongusEntity extends TamableAnimal implements GeoAnimatable, Neutr
 	}
 
 	@Override
-	public double getTick(Object object) {
+	public int getRemainingPersistentAngerTime() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
+	@Override
+	public void setRemainingPersistentAngerTime(int p_21673_) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public UUID getPersistentAngerTarget() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPersistentAngerTarget(UUID p_21672_) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void startPersistentAngerTimer() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -18,16 +18,7 @@ public class ImpostorRenderer extends GeoEntityRenderer<ImpostorEntity> {
 	@Override
 	public ResourceLocation getTextureLocation(ImpostorEntity object) {
 		// TODO Apéndice de método generado automáticamente
-		return new ResourceLocation(Amodgus.MODID, "textures/entities/amongus_black.png");
+		return new ResourceLocation(Amodgus.MODID, "textures/entity/amongus_black.png");
 	}
-	
-	/*@Override
-    public RenderType getRenderType(ImpostorEntity animatable, float partialTicks, PoseStack stack,
-                                    @Nullable MultiBufferSource renderTypeBuffer,
-                                    @Nullable VertexConsumer vertexBuilder, int packedLightIn,
-                                    ResourceLocation textureLocation) {
-        stack.scale(1.0f, 1.0f, 1.0f);
-        return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
-    }*/
-	
+		
 }
